@@ -1,4 +1,6 @@
 package lk.ijse.dep10.hello;
 
-public class MyServlet2 {
+import jakarta.servlet.http.HttpServlet;
+
+public class MyServlet2 extends HttpServlet {
 }

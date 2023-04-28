@@ -25,56 +25,39 @@
     </dependencies>
 
     <build>
-        <finalName>my-jar</finalName>
+        <finalName>my-fat-app</finalName>
 
+        <!--
+            We are going to create an executable fat jar
+            A fat jar is a jar file that contains all the dependencies within it
+            To do this via Maven, we need a plugin called "assembly"
+            https://maven.apache.org/plugins/maven-assembly-plugin/
+        -->
         <plugins>
-
-            <!--
-                https://maven.apache.org/plugins/maven-jar-plugin/
-                First of all We need to customize the jar plugin
-                Because, we need to add two entries to the MANIFEST.mf which are,
-                1. Main-Class : Where does the JVM look for App's Entry Point?
-                2. Class-Path : Where does the JVM find App's Dependencies?
-            -->
             <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-jar-plugin</artifactId>
-                <configuration>
-                    <archive>
-                        <!--
-                        https://maven.apache.org/shared/maven-archiver/examples/classpath.html
-                        -->
-                        <manifest>
-                            <mainClass>lk.ijse.dep10.AppInitializer</mainClass>
-                            <addClasspath>true</addClasspath>
-                            <classpathPrefix>lib/</classpathPrefix>
-                        </manifest>
-                    </archive>
-                </configuration>
-            </plugin>
-
-            <!--
-                https://maven.apache.org/plugins/maven-dependency-plugin/
-                We need to copy app's dependencies to the lib directory
-            -->
-
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-dependency-plugin</artifactId>
+                <artifactId>maven-assembly-plugin</artifactId>
                 <version>3.5.0</version>
                 <executions>
                     <execution>
                         <phase>package</phase>
                         <goals>
-                            <goal>copy-dependencies</goal>
+                            <goal>single</goal>
                         </goals>
-                        <configuration>
-                            <outputDirectory>${project.build.directory}/lib</outputDirectory>
-                        </configuration>
                     </execution>
                 </executions>
+                <configuration>
+                    <descriptorRefs>
+                        <descriptorRef>jar-with-dependencies</descriptorRef>
+                    </descriptorRefs>
+                    <archive>
+                        <manifest>
+                            <mainClass>lk.ijse.dep10.AppInitializer</mainClass>
+                        </manifest>
+                    </archive>
+                </configuration>
             </plugin>
         </plugins>
+
     </build>
 
 </project>

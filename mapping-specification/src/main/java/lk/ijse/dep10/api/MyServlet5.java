@@ -10,14 +10,14 @@ import java.io.IOException;
 import java.io.PrintWriter;
 import java.time.LocalDateTime;
 
-@WebServlet(name = "MyServlet4", urlPatterns = "")
+@WebServlet(name = "MyServlet5", urlPatterns = "/")
 public class MyServlet5 extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         response.setContentType("text/html");
         try (PrintWriter out = response.getWriter()) {
             out.println("<body style='display: flex; flex-direction: column; justify-content: center; align-items: center; height: 95vh;'>\n" +
-                    "<h1>Hello I am from My Servlet 4</h1>\n" +
+                    "<h1>Hello I am from My Servlet 5</h1>\n" +
                     "<h2>Server time is now: "+ LocalDateTime.now() +"</h2>\n" +
                     "</body>");
         }
