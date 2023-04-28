@@ -1,0 +1,40 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Save Customer - Hello Project</title>
+    <link rel="stylesheet" href="css/reset.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Ubuntu:ital,wght@0,300;0,400;0,500;0,700;1,400;1,500;1,700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="css/styles.css">
+    <link rel="stylesheet" href="css/save-customer-styles.css">
+</head>
+<body>
+    <h1>Save Customer</h1>
+    <main>
+        <span>Enter customer details to save</span>
+        <form action="#">
+            <div>
+                <label>Customer ID</label>
+                <input required pattern="^C\d{3}$" name="id" type="text" placeholder="Eg. C001">
+            </div>
+            <div>
+                <label>Customer Name</label>
+                <input required name="name" type="text" placeholder="Eg. Kasun Sampath">
+            </div>
+            <div>
+                <label>Customer Address</label>
+                <input required minlength="3" name="address" type="text" placeholder="Eg. Grace Peries Road, Panadura">
+            </div>
+            <div>
+                <button class="btn primary">Save</button>
+                <a class="btn" href="index.html">Back</a>
+            </div>
+        </form>
+    </main>
+</body>
+</html>

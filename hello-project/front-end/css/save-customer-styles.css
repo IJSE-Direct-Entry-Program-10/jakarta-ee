@@ -1,0 +1,42 @@
+body {
+    height: 90vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    row-gap: 10px;
+}
+
+form {
+    display: flex;
+    flex-direction: column;
+}
+
+form > div {
+    padding: 10px 0;
+    text-align: center;
+}
+
+form label {
+    display: block;
+    padding: 10px 0;
+}
+
+form input {
+    width: 100%;
+    padding: 10px;
+    text-align: center;
+    border-radius: 5px;
+    border: 1px solid lightgray;
+    font-family: inherit;
+    font-size: inherit;
+    outline: none;
+}
+
+form input:hover, form input:focus {
+    border-color: dodgerblue;
+}
+
+main {
+    text-align: center;
+}

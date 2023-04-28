@@ -1,0 +1,54 @@
+body {
+    height: 95vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    row-gap: 10px;
+}
+
+table thead th{
+    padding: 10px;
+    border: 1px solid lightgray;
+    font-weight: bold;
+    cursor: default;
+}
+
+table tbody td {
+    padding: 10px;
+    border: 1px solid lightgray;
+}
+
+table tbody tr:hover {
+    cursor: pointer;
+    background-color: lightgray;
+}
+
+table th:nth-child(2),
+table td:nth-child(2){
+    width: 150px;
+    text-align: left;
+}
+
+table th:last-child,
+table td:last-child{
+    width: 250px;
+    text-align: left;
+}
+
+main{
+    height: 350px;
+    overflow: scroll;
+    overflow-x: hidden;
+    border: 1px solid lightgray;
+}
+
+main::-webkit-scrollbar {
+    width: 7px;
+    height: 8px;
+    background-color: #aaa;
+}
+
+main::-webkit-scrollbar-thumb {
+    background: dodgerblue;
+}
