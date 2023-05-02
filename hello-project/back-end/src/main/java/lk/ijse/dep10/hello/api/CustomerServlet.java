@@ -3,11 +3,13 @@ package lk.ijse.dep10.hello.api;
 import jakarta.servlet.*;
 import jakarta.servlet.http.*;
 import jakarta.servlet.annotation.*;
+import lk.ijse.dep10.hello.model.Customer;
 import org.apache.commons.dbcp2.BasicDataSource;
 
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.sql.*;
+import java.util.ArrayList;
 
 @WebServlet(name = "CustomerServlet", value = "/customers")
 public class CustomerServlet extends HttpServlet {
@@ -17,7 +19,14 @@ public class CustomerServlet extends HttpServlet {
         try (Connection connection = pool.getConnection()) {
             Statement stm = connection.createStatement();
             ResultSet rst = stm.executeQuery("SELECT * FROM Customer");
-            request.setAttribute("resultSet", rst);
+            ArrayList<Customer> customerList = new ArrayList<>();
+            while (rst.next()){
+                String id = rst.getString("id");
+                String name = rst.getString("name");
+                String address = rst.getString("address");
+                customerList.add(new Customer(id, name, address));
+            }
+            request.setAttribute("customers", customerList);
             getServletContext().getRequestDispatcher("/WEB-INF/page/list-all-customers.jsp")
                     .forward(request, response);
         } catch (SQLException e) {

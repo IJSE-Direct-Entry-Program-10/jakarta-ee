@@ -1,4 +1,6 @@
 <%@ page import="java.sql.ResultSet" %>
+<%@ page import="lk.ijse.dep10.hello.model.Customer" %>
+<%@ page import="java.util.ArrayList" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <!doctype html>
 <html lang="en">
@@ -28,16 +30,13 @@
             </thead>
             <tbody>
                 <%
-                    ResultSet rst = (ResultSet) request.getAttribute("resultSet");
-                    while (rst.next()){
-                        String id = rst.getString("id");
-                        String name = rst.getString("name");
-                        String address = rst.getString("address");
+                    ArrayList<Customer> customers = (ArrayList<Customer>) request.getAttribute("customers");
+                    for(Customer c : customers ){
                 %>
                         <tr>
-                            <td><%=id%></td>
-                            <td><%=name%></td>
-                            <td><%=address%></td>
+                            <td><%=c.getId()%></td>
+                            <td><%=c.getName()%></td>
+                            <td><%=c.getAddress()%></td>
                         </tr>
                 <%
                     }
