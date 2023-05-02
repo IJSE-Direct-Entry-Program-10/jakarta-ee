@@ -42,14 +42,8 @@ public class CustomerServlet extends HttpServlet {
             PreparedStatement stmExist = connection.prepareStatement("SELECT * FROM Customer WHERE id=?");
             stmExist.setString(1, id);
             if (stmExist.executeQuery().next()){
-                response.setStatus(HttpServletResponse.SC_CONFLICT);
-                response.setContentType("text/html");
-                try (PrintWriter out = response.getWriter()) {
-                    out.println("<body style='text-align: center; font-family: Ubuntu'>\n" +
-                            "    <h2 style='color: red;'>Customer ID: " + id +" already exists</h2>\n" +
-                            "    <p><a href='http://localhost:5000/save-customer.html'>Try again</a></p>\n" +
-                            "</body>");
-                }
+                getServletContext().getRequestDispatcher("/WEB-INF/page/customer-exists-error.jsp")
+                        .forward(request, response);
                 return;
             }
 
