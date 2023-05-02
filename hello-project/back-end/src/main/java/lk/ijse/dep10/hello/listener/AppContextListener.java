@@ -11,25 +11,28 @@ import java.sql.SQLException;
 @WebListener
 public class AppContextListener implements ServletContextListener {
 
+    /* Application Context == Servlet Context */
     @Override
     public void contextInitialized(ServletContextEvent sce) {
-        BasicDataSource dbcp = new BasicDataSource();
-        dbcp.setUrl("jdbc:mysql://localhost:3306/dep10_hello");
-        dbcp.setUsername("root");
-        dbcp.setPassword("mysql");
-        dbcp.setDriverClassName("com.mysql.cj.jdbc.Driver");
-        dbcp.setInitialSize(10);
-        dbcp.setMaxTotal(50);
+        BasicDataSource pool = new BasicDataSource();
+        pool.setUrl("jdbc:mysql://localhost:3306/dep10_hello");
+        pool.setUsername("root");
+        pool.setPassword("mysql");
+        pool.setDriverClassName("com.mysql.cj.jdbc.Driver");
+
+        pool.setInitialSize(10);
+        pool.setMaxTotal(50);
+
         ServletContext servletContext = sce.getServletContext();
-        servletContext.setAttribute("dbcp", dbcp);
+        servletContext.setAttribute("pool", pool);
     }
 
     @Override
     public void contextDestroyed(ServletContextEvent sce) {
         ServletContext servletContext = sce.getServletContext();
-        BasicDataSource dbcp = (BasicDataSource) servletContext.getAttribute("dbcp");
+        BasicDataSource pool = (BasicDataSource) servletContext.getAttribute("pool");
         try {
-            dbcp.close();
+            pool.close();
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }

@@ -17,7 +17,7 @@
     <h1>Save Customer</h1>
     <main>
         <span>Enter customer details to save</span>
-        <form action="#">
+        <form action="http://localhost:8080/app/customers" method="POST" enctype="application/x-www-form-urlencoded">
             <div>
                 <label>Customer ID</label>
                 <input required pattern="^C\d{3}$" name="id" type="text" placeholder="Eg. C001">
