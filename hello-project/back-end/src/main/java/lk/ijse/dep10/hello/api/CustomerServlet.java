@@ -7,15 +7,22 @@ import org.apache.commons.dbcp2.BasicDataSource;
 
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.SQLException;
+import java.sql.*;
 
 @WebServlet(name = "CustomerServlet", value = "/customers")
 public class CustomerServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-
+        BasicDataSource pool = (BasicDataSource) getServletContext().getAttribute("pool");
+        try (Connection connection = pool.getConnection()) {
+            Statement stm = connection.createStatement();
+            ResultSet rst = stm.executeQuery("SELECT * FROM Customer");
+            request.setAttribute("resultSet", rst);
+            getServletContext().getRequestDispatcher("/WEB-INF/page/list-all-customers.jsp")
+                    .forward(request, response);
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
     }
 
     @Override
@@ -54,14 +61,8 @@ public class CustomerServlet extends HttpServlet {
             stm.setString(3, address);
             stm.executeUpdate();
 
-            response.setStatus(HttpServletResponse.SC_CREATED);
-            response.setContentType("text/html");
-            try (PrintWriter out = response.getWriter()) {
-                out.println("<body style='text-align: center; font-family: Ubuntu'>\n" +
-                        "    <h2>Customer ID: "+ id +" has been saved successfully</h2>\n" +
-                        "    <p>Click to add a <a href='http://localhost:5000/save-customer.html'>new customer</a></p>\n" +
-                        "</body>");
-            }
+            getServletContext().getRequestDispatcher("/WEB-INF/page/successful-customer-response.jsp")
+                    .forward(request, response);
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }

@@ -31,7 +31,8 @@
     </style>
 </head>
 <body>
-    <h2>Customer ID:  already exists</h2>
+    <%-- JSP Expression --%>
+    <h2>Customer ID: <%= request.getParameter("id") %>  already exists</h2>
     <p>Please <a href="http://localhost:5000/save-customer.html">try again</a> with a new id</p>
 </body>
 </html>

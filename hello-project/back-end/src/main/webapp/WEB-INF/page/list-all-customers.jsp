@@ -1,3 +1,5 @@
+<%@ page import="java.sql.ResultSet" %>
+<%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <!doctype html>
 <html lang="en">
 <head>
@@ -24,7 +26,23 @@
                     <th>ADDRESS</th>
                 </tr>
             </thead>
-            <tbody></tbody>
+            <tbody>
+                <%
+                    ResultSet rst = (ResultSet) request.getAttribute("resultSet");
+                    while (rst.next()){
+                        String id = rst.getString("id");
+                        String name = rst.getString("name");
+                        String address = rst.getString("address");
+                %>
+                        <tr>
+                            <td><%=id%></td>
+                            <td><%=name%></td>
+                            <td><%=address%></td>
+                        </tr>
+                <%
+                    }
+                %>
+            </tbody>
         </table>
     </main>
     <a href="index.html" class="btn btn">Main Menu</a>
