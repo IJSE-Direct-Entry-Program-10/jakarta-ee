@@ -1,7 +1,7 @@
-<%@ page import="java.sql.ResultSet" %>
 <%@ page import="lk.ijse.dep10.hello.model.Customer" %>
 <%@ page import="java.util.ArrayList" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!doctype html>
 <html lang="en">
 <head>
@@ -29,18 +29,13 @@
                 </tr>
             </thead>
             <tbody>
-                <%
-                    ArrayList<Customer> customers = (ArrayList<Customer>) request.getAttribute("customers");
-                    for(Customer c : customers ){
-                %>
+                <c:forEach var="c" items="${customers}">
                         <tr>
-                            <td><%=c.getId()%></td>
-                            <td><%=c.getName()%></td>
-                            <td><%=c.getAddress()%></td>
+                            <td>${c.id}</td>
+                            <td>${c.name}</td>
+                            <td>${c.address}</td>
                         </tr>
-                <%
-                    }
-                %>
+                </c:forEach>
             </tbody>
         </table>
     </main>
