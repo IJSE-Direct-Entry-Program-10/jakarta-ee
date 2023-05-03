@@ -35,6 +35,7 @@
         header > menu {
             list-style-type: none;
             display: flex;
+            gap: 5px;
         }
 
         header > menu > li > a {
@@ -42,11 +43,11 @@
             color: black;
             padding: 10px;
             display: inline-block;
+            border-radius: 10px;
         }
 
-        header > menu > li:hover {
+        header > menu > li:hover a{
             background-color: lightgray;
-            border-radius: 10px;
         }
 
         main {
@@ -64,15 +65,23 @@
             align-items: center;
             font-weight: bold;
         }
+
+        .selected {
+            background-color: skyblue;
+        }
     </style>
 </head>
 <body>
 <header>
     <h1>Welcome to JSP</h1>
     <menu>
-        <li><a href="app.jsp">Home</a></li>
-        <li><a href="app.jsp?page=page-1">Page1</a></li>
-        <li><a href="app.jsp?page=page-2">Page2</a></li>
+        <%
+            String p = request.getParameter("page");
+            if (p == null || p.isBlank()) p = "home";
+        %>
+        <li><a class="<%= p.equalsIgnoreCase("home") ? "selected": "" %>" href="app.jsp">Home</a></li>
+        <li><a class="<%= p.equalsIgnoreCase("page-1") ? "selected": "" %>" href="app.jsp?page=page-1">Page1</a></li>
+        <li><a class="<%= p.equalsIgnoreCase("page-2") ? "selected": "" %>" href="app.jsp?page=page-2">Page2</a></li>
     </menu>
 </header>
 
