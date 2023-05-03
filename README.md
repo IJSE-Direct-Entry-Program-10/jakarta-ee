@@ -10,6 +10,11 @@ A collections of projects to explore the world of Jakarta EE
 - [WAR File Structure](/war-file-structure)
 - [Servlet Mapping Specification](/mapping-specification)
 - [Hello Project](/hello-project)
+- [CSR vs SSR](/csr-vs-ssr)
+	- Client-Side Rendering vs. Server-Side Rendering
+	- Servlets vs. JSP
+	- The importance of WEB-INF directory
+	- Request Dispatcher vs. Named Dispatcher
 
 ### License
 Copyright 2023 DEP. All Rights Reserved.
