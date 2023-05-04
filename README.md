@@ -15,6 +15,8 @@ A collections of projects to explore the world of Jakarta EE
 	- Servlets vs. JSP
 	- The importance of WEB-INF directory
 	- Request Dispatcher vs. Named Dispatcher
+- [Basics of JSP](/basics-of-jsp)
+- [To-do List App](/to-do-list-app)
 
 ### License
 Copyright 2023 DEP. All Rights Reserved.
