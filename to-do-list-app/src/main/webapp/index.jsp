@@ -72,15 +72,15 @@
         </c:if>
         <c:forEach var="task" items="${taskList}">
             <div class="task">
-                <a href="#">
+                <a href="tasks/${task.id}?action=update&status=COMPLETED">
                     <label>
                         <input type="checkbox"> ${task.description}
                     </label>
                 </a>
-                <a href="#" title="Delete Task">
-          <span class="material-symbols-outlined">
-            delete
-          </span>
+                <a href="tasks/${task.id}?action=delete" title="Delete Task">
+                  <span class="material-symbols-outlined">
+                    delete
+                  </span>
                 </a>
             </div>
         </c:forEach>
@@ -90,12 +90,12 @@
         <h2>Completed Tasks</h2>
         <c:forEach var="task" items="${completedTaskList}">
             <div class="task completed">
-            <a href="#">
+            <a href="tasks/${task.id}?action=update&status=NOT_COMPLETED">
                 <label>
                     <input checked type="checkbox"> ${task.description}
                 </label>
             </a>
-            <a href="#">
+            <a href="tasks/${task.id}?action=delete">
           <span class="material-symbols-outlined">
             delete
           </span>
