@@ -18,6 +18,8 @@
 <body>
     <h1>Basics of Jakarta Server Pages (JSP)</h1>
     <%-- Expressions --%>
+
+    <% out.println(10+15); %>
     <h4>10+15=<%= 10+15 %></h4>
     <%! int x; %>
     <%
@@ -43,6 +45,8 @@
         {
             System.out.println("This is going to print only once");
         }
+
+
     %>
 </body>
 </html>
