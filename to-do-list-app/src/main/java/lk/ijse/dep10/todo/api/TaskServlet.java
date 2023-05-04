@@ -48,7 +48,7 @@ public class TaskServlet extends HttpServlet {
             stm.executeUpdate();
 
             resp.setStatus(HttpServletResponse.SC_CREATED);
-            getServletContext().getRequestDispatcher("/index.jsp").forward(req, resp);
+            resp.sendRedirect("index.jsp");
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
@@ -68,8 +68,7 @@ public class TaskServlet extends HttpServlet {
             int affectedRows = stm.executeUpdate();
             if (affectedRows == 1){
                 resp.setStatus(HttpServletResponse.SC_NO_CONTENT);
-                getServletContext().getRequestDispatcher("/index.jsp")
-                        .forward(req, resp);
+                resp.sendRedirect("index.jsp");
             }else {
                 resp.sendError(HttpServletResponse.SC_NOT_FOUND, "Invalid Task ID");
             }
@@ -100,8 +99,7 @@ public class TaskServlet extends HttpServlet {
             int affectedRows = stm.executeUpdate();
             if (affectedRows == 1){
                 resp.setStatus(HttpServletResponse.SC_NO_CONTENT);
-                getServletContext().getRequestDispatcher("/index.jsp")
-                        .forward(req, resp);
+                resp.sendRedirect("index.jsp");
             }else {
                 resp.sendError(HttpServletResponse.SC_NOT_FOUND, "Invalid Task ID");
             }
