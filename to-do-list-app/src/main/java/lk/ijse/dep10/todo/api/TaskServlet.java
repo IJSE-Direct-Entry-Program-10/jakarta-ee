@@ -12,11 +12,15 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
 
-@WebServlet(urlPatterns = "/tasks")
+@WebServlet(urlPatterns = "/tasks/*")
 public class TaskServlet extends HttpServlet {
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        if (req.getPathInfo() != null) {
+            resp.sendError(HttpServletResponse.SC_BAD_REQUEST, "Invalid URI");
+            return;
+        }
         String description = req.getParameter("description");
         if (description == null || description.isEmpty()){
             resp.sendError(HttpServletResponse.SC_BAD_REQUEST, "Description required");
@@ -34,6 +38,30 @@ public class TaskServlet extends HttpServlet {
             getServletContext().getRequestDispatcher("/index.jsp").forward(req, resp);
         } catch (SQLException e) {
             throw new RuntimeException(e);
+        }
+    }
+
+    @Override
+    protected void doDelete(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        if (req.getPathInfo() == null || !req.getPathInfo().matches("/\\d+")){
+            resp.sendError(HttpServletResponse.SC_BAD_REQUEST, "Invalid URI");
+        }
+        resp.getWriter().println("<h1>Delete Works!</h1>");
+    }
+
+    protected void doPatch(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        if (req.getPathInfo() == null || !req.getPathInfo().matches("/\\d+")){
+            resp.sendError(HttpServletResponse.SC_BAD_REQUEST, "Invalid URI");
+        }
+        resp.getWriter().println("<h1>Patch Works!</h1>");
+    }
+
+    @Override
+    protected void service(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        if (req.getMethod().equalsIgnoreCase("PATCH")){
+            doPatch(req, resp);
+        }else {
+            super.service(req, resp);
         }
     }
 }
