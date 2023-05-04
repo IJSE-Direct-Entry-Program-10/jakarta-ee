@@ -1,0 +1,20 @@
+* {
+    box-sizing: border-box;
+}
+
+html {
+    font-family: Ubuntu, sans-serif;
+}
+
+h1 {
+    font-size: 2rem;
+}
+
+h2 {
+   font-size: 1.8rem;
+}
+
+h1,
+h2 {
+    font-weight: bold;
+}
