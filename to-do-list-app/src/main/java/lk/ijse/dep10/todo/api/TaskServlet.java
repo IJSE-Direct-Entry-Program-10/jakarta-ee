@@ -17,6 +17,18 @@ import java.sql.SQLException;
 public class TaskServlet extends HttpServlet {
 
     @Override
+    protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        String action = req.getParameter("action");
+        if (action == null){
+            super.doGet(req,resp);
+        }else if (action.equalsIgnoreCase("delete")){
+            doDelete(req, resp);
+        }else if (action.equals("update")){
+            doPatch(req, resp);
+        }
+    }
+
+    @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         if (req.getPathInfo() != null) {
             resp.sendError(HttpServletResponse.SC_BAD_REQUEST, "Invalid URI");
@@ -56,8 +68,8 @@ public class TaskServlet extends HttpServlet {
             int affectedRows = stm.executeUpdate();
             if (affectedRows == 1){
                 resp.setStatus(HttpServletResponse.SC_NO_CONTENT);
-//                getServletContext().getRequestDispatcher("/index.jsp")
-//                        .forward(req, resp);
+                getServletContext().getRequestDispatcher("/index.jsp")
+                        .forward(req, resp);
             }else {
                 resp.sendError(HttpServletResponse.SC_NOT_FOUND, "Invalid Task ID");
             }
@@ -88,8 +100,8 @@ public class TaskServlet extends HttpServlet {
             int affectedRows = stm.executeUpdate();
             if (affectedRows == 1){
                 resp.setStatus(HttpServletResponse.SC_NO_CONTENT);
-//                getServletContext().getRequestDispatcher("/index.jsp")
-//                        .forward(req, resp);
+                getServletContext().getRequestDispatcher("/index.jsp")
+                        .forward(req, resp);
             }else {
                 resp.sendError(HttpServletResponse.SC_NOT_FOUND, "Invalid Task ID");
             }
