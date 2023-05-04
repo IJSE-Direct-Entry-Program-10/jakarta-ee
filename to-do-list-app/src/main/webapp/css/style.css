@@ -131,7 +131,7 @@ header {
 }
 
 header h1 span {
-    font-size: 40px;
+    font-size: 40px !important;
     vertical-align: text-top;
     color: dodgerblue;
 }
