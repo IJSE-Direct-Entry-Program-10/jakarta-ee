@@ -4,6 +4,7 @@ import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletRequestWrapper;
 import jakarta.servlet.http.HttpServletResponse;
 import org.apache.commons.dbcp2.BasicDataSource;
 
@@ -45,13 +46,30 @@ public class TaskServlet extends HttpServlet {
     protected void doDelete(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         if (req.getPathInfo() == null || !req.getPathInfo().matches("/\\d+")){
             resp.sendError(HttpServletResponse.SC_BAD_REQUEST, "Invalid URI");
+            return;
         }
-        resp.getWriter().println("<h1>Delete Works!</h1>");
+        BasicDataSource dbcp = (BasicDataSource) getServletContext().getAttribute("dbcp");
+        try (Connection connection = dbcp.getConnection()) {
+            PreparedStatement stm = connection.prepareStatement("DELETE FROM Task WHERE id=?");
+            var taskId = Integer.parseInt(req.getPathInfo().substring(1));
+            stm.setInt(1, taskId);
+            int affectedRow = stm.executeUpdate();
+            if (affectedRow == 1){
+                resp.setStatus(HttpServletResponse.SC_NO_CONTENT);
+//                getServletContext().getRequestDispatcher("/index.jsp")
+//                        .forward(req, resp);
+            }else {
+                resp.sendError(HttpServletResponse.SC_NOT_FOUND, "Invalid Task ID");
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
     }
 
     protected void doPatch(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         if (req.getPathInfo() == null || !req.getPathInfo().matches("/\\d+")){
             resp.sendError(HttpServletResponse.SC_BAD_REQUEST, "Invalid URI");
+            return;
         }
         resp.getWriter().println("<h1>Patch Works!</h1>");
     }
