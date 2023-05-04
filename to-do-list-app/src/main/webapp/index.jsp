@@ -3,9 +3,10 @@
 <%@ page import="java.sql.SQLException" %>
 <%@ page import="java.sql.Statement" %>
 <%@ page import="java.sql.ResultSet" %>
-<%@ page import="java.util.ArrayList" %>
 <%@ page import="lk.ijse.dep10.todo.model.Task" %>
+<%@ page import="java.util.ArrayList" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%!
     private ArrayList<Task> getTaskList(ResultSet rst) throws SQLException{
         ArrayList<Task> taskList = new ArrayList<>();
@@ -19,16 +20,18 @@
     }
 %>
 <%
-    BasicDataSource pool = (BasicDataSource) request.getAttribute("dbcp");
-    try (Connection connection = pool.getConnection()) {
-        Statement stm = connection.createStatement();
-        ResultSet rst1 = stm.executeQuery("SELECT * FROM Task WHERE status = 'NOT_COMPLETED'");
-        ArrayList<Task> taskList = getTaskList(rst1);
-        ResultSet rst2 = stm.executeQuery("SELECT * FROM Task WHERE status = 'COMPLETED'");
-        ArrayList<Task> completedTaskList = getTaskList(rst2);
-    } catch (SQLException e) {
-        throw new RuntimeException(e);
-    }
+  BasicDataSource dbcp = (BasicDataSource) application.getAttribute("dbcp");
+  try(Connection connection = dbcp.getConnection()){
+      Statement stm = connection.createStatement();
+      ResultSet rst = stm.executeQuery("SELECT * FROM Task WHERE status = 'NOT_COMPLETED'");
+      ArrayList<Task> taskList = getTaskList(rst);
+      rst = stm.executeQuery("SELECT * FROM Task WHERE status = 'COMPLETED'");
+      ArrayList<Task> completedTaskList = getTaskList(rst);
+      request.setAttribute("taskList", taskList);
+      request.setAttribute("completedTaskList", completedTaskList);
+  }catch(SQLException e){
+      throw new RuntimeException(e);
+  }
 %>
 <!DOCTYPE html>
 <html lang="en">
@@ -61,50 +64,35 @@
 </header>
 <main>
     <section id="tasks">
-        <div id="hint">Please add a new task!</div>
-        <div class="task">
-            <a href="#">
-                <label>
-                    <input type="checkbox"> Finish the project
-                </label>
-            </a>
-            <a href="#" title="Delete Task">
+        <c:if test="${empty taskList and empty completedTaskList}">
+            <div id="hint">Please add a new task!</div>
+        </c:if>
+        <c:if test="${empty taskList and !empty completedTaskList}">
+            <div id="hint">Hooray! No more tasks to complete</div>
+        </c:if>
+        <c:forEach var="task" items="${taskList}">
+            <div class="task">
+                <a href="#">
+                    <label>
+                        <input type="checkbox"> ${task.description}
+                    </label>
+                </a>
+                <a href="#" title="Delete Task">
           <span class="material-symbols-outlined">
             delete
           </span>
-            </a>
-        </div>
-        <div class="task">
-            <a href="#">
-                <label>
-                    <input type="checkbox"> Finish the project
-                </label>
-            </a>
-            <a href="#" title="Delete Task">
-          <span class="material-symbols-outlined">
-            delete
-          </span>
-            </a>
-        </div>
-        <div class="task">
-            <a href="#">
-                <label>
-                    <input type="checkbox"> Finish the project
-                </label>
-            </a>
-            <a href="#" title="Delete Task">
-          <span class="material-symbols-outlined">
-            delete
-          </span>
-            </a>
-        </div>
+                </a>
+            </div>
+        </c:forEach>
     </section>
-    <section id="completed-tasks">
+    <c:if test="${!empty completedTaskList}">
+        <section id="completed-tasks">
         <h2>Completed Tasks</h2>
-        <div class="task completed">
+        <c:forEach var="task" items="${completedTaskList}">
+            <div class="task completed">
             <a href="#">
                 <label>
-                    <input type="checkbox"> Finish the project
+                    <input checked type="checkbox"> ${task.description}
                 </label>
             </a>
             <a href="#">
@@ -113,31 +101,9 @@
           </span>
             </a>
         </div>
-        <div class="task completed">
-            <a href="#">
-                <label>
-                    <input type="checkbox"> Finish the project
-                </label>
-            </a>
-            <a href="#">
-          <span class="material-symbols-outlined">
-            delete
-          </span>
-            </a>
-        </div>
-        <div class="task completed">
-            <a href="#">
-                <label>
-                    <input type="checkbox"> Finish the project
-                </label>
-            </a>
-            <a href="#">
-          <span class="material-symbols-outlined">
-            delete
-          </span>
-            </a>
-        </div>
+        </c:forEach>
     </section>
+    </c:if>
 </main>
 <footer>
     Copyright &copy; 2023 DEP-10. All Rights Reserved.
