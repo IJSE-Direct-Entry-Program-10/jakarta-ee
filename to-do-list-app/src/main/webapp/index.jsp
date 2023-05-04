@@ -3,14 +3,29 @@
 <%@ page import="java.sql.SQLException" %>
 <%@ page import="java.sql.Statement" %>
 <%@ page import="java.sql.ResultSet" %>
+<%@ page import="java.util.ArrayList" %>
+<%@ page import="lk.ijse.dep10.todo.model.Task" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%!
+    private ArrayList<Task> getTaskList(ResultSet rst) throws SQLException{
+        ArrayList<Task> taskList = new ArrayList<>();
+        while (rst.next()){
+            int id = rst.getInt("id");
+            String description = rst.getString("description");
+            String status = rst.getString("status");
+            taskList.add(new Task(id, description, Task.Status.valueOf(status)));
+        }
+        return taskList;
+    }
+%>
 <%
     BasicDataSource pool = (BasicDataSource) request.getAttribute("dbcp");
     try (Connection connection = pool.getConnection()) {
         Statement stm = connection.createStatement();
         ResultSet rst1 = stm.executeQuery("SELECT * FROM Task WHERE status = 'NOT_COMPLETED'");
+        ArrayList<Task> taskList = getTaskList(rst1);
         ResultSet rst2 = stm.executeQuery("SELECT * FROM Task WHERE status = 'COMPLETED'");
-
+        ArrayList<Task> completedTaskList = getTaskList(rst2);
     } catch (SQLException e) {
         throw new RuntimeException(e);
     }
