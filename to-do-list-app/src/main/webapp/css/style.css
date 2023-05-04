@@ -80,6 +80,7 @@ form > button:active {
 
 .task label {
     cursor: pointer;
+    pointer-events: none;
 }
 
 .task:hover label {

@@ -4,7 +4,6 @@ import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
-import jakarta.servlet.http.HttpServletRequestWrapper;
 import jakarta.servlet.http.HttpServletResponse;
 import org.apache.commons.dbcp2.BasicDataSource;
 
@@ -19,11 +18,11 @@ public class TaskServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         String action = req.getParameter("action");
-        if (action == null){
-            super.doGet(req,resp);
-        }else if (action.equalsIgnoreCase("delete")){
+        if (action == null) {
+            super.doGet(req, resp);
+        } else if (action.equalsIgnoreCase("delete")) {
             doDelete(req, resp);
-        }else if (action.equals("update")){
+        } else if (action.equals("update")) {
             doPatch(req, resp);
         }
     }
@@ -35,7 +34,7 @@ public class TaskServlet extends HttpServlet {
             return;
         }
         String description = req.getParameter("description");
-        if (description == null || description.isEmpty()){
+        if (description == null || description.isEmpty()) {
             resp.sendError(HttpServletResponse.SC_BAD_REQUEST, "Description required");
             return;
         }
@@ -48,7 +47,9 @@ public class TaskServlet extends HttpServlet {
             stm.executeUpdate();
 
             resp.setStatus(HttpServletResponse.SC_CREATED);
-            resp.sendRedirect("index.jsp");
+//            getServletContext().getRequestDispatcher("/index.jsp")
+//                    .forward(req, resp);
+            resp.sendRedirect( getServletContext().getContextPath() + "/index.jsp");
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
@@ -56,7 +57,7 @@ public class TaskServlet extends HttpServlet {
 
     @Override
     protected void doDelete(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        if (req.getPathInfo() == null || !req.getPathInfo().matches("/\\d+")){
+        if (req.getPathInfo() == null || !req.getPathInfo().matches("/\\d+")) {
             resp.sendError(HttpServletResponse.SC_BAD_REQUEST, "Invalid URI");
             return;
         }
@@ -66,10 +67,10 @@ public class TaskServlet extends HttpServlet {
             var taskId = Integer.parseInt(req.getPathInfo().substring(1));
             stm.setInt(1, taskId);
             int affectedRows = stm.executeUpdate();
-            if (affectedRows == 1){
+            if (affectedRows == 1) {
                 resp.setStatus(HttpServletResponse.SC_NO_CONTENT);
-                resp.sendRedirect("index.jsp");
-            }else {
+                resp.sendRedirect( getServletContext().getContextPath() + "/index.jsp");
+            } else {
                 resp.sendError(HttpServletResponse.SC_NOT_FOUND, "Invalid Task ID");
             }
         } catch (SQLException e) {
@@ -78,14 +79,14 @@ public class TaskServlet extends HttpServlet {
     }
 
     protected void doPatch(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        if (req.getPathInfo() == null || !req.getPathInfo().matches("/\\d+")){
+        if (req.getPathInfo() == null || !req.getPathInfo().matches("/\\d+")) {
             resp.sendError(HttpServletResponse.SC_BAD_REQUEST, "Invalid URI");
             return;
         }
         String status = req.getParameter("status");
         if (status == null ||
                 !(status.equalsIgnoreCase("COMPLETED") ||
-                status.equalsIgnoreCase("NOT_COMPLETED"))){
+                        status.equalsIgnoreCase("NOT_COMPLETED"))) {
             resp.sendError(HttpServletResponse.SC_BAD_REQUEST, "Invalid Status");
             return;
         }
@@ -97,10 +98,10 @@ public class TaskServlet extends HttpServlet {
             stm.setString(1, req.getParameter("status"));
             stm.setInt(2, taskId);
             int affectedRows = stm.executeUpdate();
-            if (affectedRows == 1){
+            if (affectedRows == 1) {
                 resp.setStatus(HttpServletResponse.SC_NO_CONTENT);
-                resp.sendRedirect("index.jsp");
-            }else {
+                resp.sendRedirect( getServletContext().getContextPath() + "/index.jsp");
+            } else {
                 resp.sendError(HttpServletResponse.SC_NOT_FOUND, "Invalid Task ID");
             }
         } catch (SQLException e) {
@@ -110,9 +111,9 @@ public class TaskServlet extends HttpServlet {
 
     @Override
     protected void service(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        if (req.getMethod().equalsIgnoreCase("PATCH")){
+        if (req.getMethod().equalsIgnoreCase("PATCH")) {
             doPatch(req, resp);
-        }else {
+        } else {
             super.service(req, resp);
         }
     }
