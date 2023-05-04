@@ -1,113 +1,131 @@
+<%@ page import="org.apache.commons.dbcp2.BasicDataSource" %>
+<%@ page import="java.sql.Connection" %>
+<%@ page import="java.sql.SQLException" %>
+<%@ page import="java.sql.Statement" %>
+<%@ page import="java.sql.ResultSet" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%
+    BasicDataSource pool = (BasicDataSource) request.getAttribute("dbcp");
+    try (Connection connection = pool.getConnection()) {
+        Statement stm = connection.createStatement();
+        ResultSet rst1 = stm.executeQuery("SELECT * FROM Task WHERE status = 'NOT_COMPLETED'");
+        ResultSet rst2 = stm.executeQuery("SELECT * FROM Task WHERE status = 'COMPLETED'");
+
+    } catch (SQLException e) {
+        throw new RuntimeException(e);
+    }
+%>
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport"
-        content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
-  <meta http-equiv="X-UA-Compatible" content="ie=edge">
-  <title>To-do List App</title>
-  <link rel="stylesheet" href="css/reset.css">
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Ubuntu:ital,wght@0,300;0,400;0,500;0,700;1,300;1,400;1,500;1,700&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@48,400,0,0" />
-  <link rel="stylesheet" href="css/style.css">
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>To-do List App</title>
+    <link rel="stylesheet" href="css/reset.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Ubuntu:ital,wght@0,300;0,400;0,500;0,700;1,300;1,400;1,500;1,700&display=swap"
+          rel="stylesheet">
+    <link rel="stylesheet"
+          href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@48,400,0,0"/>
+    <link rel="stylesheet" href="css/style.css">
 </head>
 <body>
-  <header>
+<header>
     <h1>
       <span class="material-symbols-outlined">
         task_alt
       </span>
-      To-do List App</h1>
+        To-do List App</h1>
     <form action="#">
-      <input type="text" placeholder="Enter a new task (Eg. Finalize the UI)">
-      <button>Add New Task</button>
+        <input type="text" placeholder="Enter a new task (Eg. Finalize the UI)">
+        <button>Add New Task</button>
     </form>
-  </header>
-  <main>
+</header>
+<main>
     <section id="tasks">
-      <div id="hint">Please add a new task!</div>
-      <div class="task">
-        <a href="#">
-          <label>
-            <input type="checkbox"> Finish the project
-          </label>
-        </a>
-        <a href="#" title="Delete Task">
+        <div id="hint">Please add a new task!</div>
+        <div class="task">
+            <a href="#">
+                <label>
+                    <input type="checkbox"> Finish the project
+                </label>
+            </a>
+            <a href="#" title="Delete Task">
           <span class="material-symbols-outlined">
             delete
           </span>
-        </a>
-      </div>
-      <div class="task">
-        <a href="#">
-          <label>
-            <input type="checkbox"> Finish the project
-          </label>
-        </a>
-        <a href="#" title="Delete Task">
+            </a>
+        </div>
+        <div class="task">
+            <a href="#">
+                <label>
+                    <input type="checkbox"> Finish the project
+                </label>
+            </a>
+            <a href="#" title="Delete Task">
           <span class="material-symbols-outlined">
             delete
           </span>
-        </a>
-      </div>
-      <div class="task">
-        <a href="#">
-          <label>
-            <input type="checkbox"> Finish the project
-          </label>
-        </a>
-        <a href="#" title="Delete Task">
+            </a>
+        </div>
+        <div class="task">
+            <a href="#">
+                <label>
+                    <input type="checkbox"> Finish the project
+                </label>
+            </a>
+            <a href="#" title="Delete Task">
           <span class="material-symbols-outlined">
             delete
           </span>
-        </a>
-      </div>
+            </a>
+        </div>
     </section>
     <section id="completed-tasks">
-      <h2>Completed Tasks</h2>
-      <div class="task completed">
-        <a href="#">
-          <label>
-            <input type="checkbox"> Finish the project
-          </label>
-        </a>
-        <a href="#">
+        <h2>Completed Tasks</h2>
+        <div class="task completed">
+            <a href="#">
+                <label>
+                    <input type="checkbox"> Finish the project
+                </label>
+            </a>
+            <a href="#">
           <span class="material-symbols-outlined">
             delete
           </span>
-        </a>
-      </div>
-      <div class="task completed">
-        <a href="#">
-          <label>
-            <input type="checkbox"> Finish the project
-          </label>
-        </a>
-        <a href="#">
+            </a>
+        </div>
+        <div class="task completed">
+            <a href="#">
+                <label>
+                    <input type="checkbox"> Finish the project
+                </label>
+            </a>
+            <a href="#">
           <span class="material-symbols-outlined">
             delete
           </span>
-        </a>
-      </div>
-      <div class="task completed">
-        <a href="#">
-          <label>
-            <input type="checkbox"> Finish the project
-          </label>
-        </a>
-        <a href="#">
+            </a>
+        </div>
+        <div class="task completed">
+            <a href="#">
+                <label>
+                    <input type="checkbox"> Finish the project
+                </label>
+            </a>
+            <a href="#">
           <span class="material-symbols-outlined">
             delete
           </span>
-        </a>
-      </div>
+            </a>
+        </div>
     </section>
-  </main>
-  <footer>
+</main>
+<footer>
     Copyright &copy; 2023 DEP-10. All Rights Reserved.
-  </footer>
+</footer>
 </body>
 </html>
