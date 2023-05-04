@@ -28,13 +28,14 @@
   </header>
   <main>
     <section id="tasks">
+      <div id="hint">Please add a new task!</div>
       <div class="task">
         <a href="#">
           <label>
             <input type="checkbox"> Finish the project
           </label>
         </a>
-        <a title="Delete Task" href="#">
+        <a href="#" title="Delete Task">
           <span class="material-symbols-outlined">
             delete
           </span>
@@ -46,7 +47,7 @@
             <input type="checkbox"> Finish the project
           </label>
         </a>
-        <a href="#">
+        <a href="#" title="Delete Task">
           <span class="material-symbols-outlined">
             delete
           </span>
@@ -58,79 +59,7 @@
             <input type="checkbox"> Finish the project
           </label>
         </a>
-        <a href="#">
-          <span class="material-symbols-outlined">
-            delete
-          </span>
-        </a>
-      </div>
-      <div class="task">
-        <a href="#">
-          <label>
-            <input type="checkbox"> Finish the project
-          </label>
-        </a>
-        <a title="Delete Task" href="#">
-          <span class="material-symbols-outlined">
-            delete
-          </span>
-        </a>
-      </div>
-      <div class="task">
-        <a href="#">
-          <label>
-            <input type="checkbox"> Finish the project
-          </label>
-        </a>
-        <a href="#">
-          <span class="material-symbols-outlined">
-            delete
-          </span>
-        </a>
-      </div>
-      <div class="task">
-        <a href="#">
-          <label>
-            <input type="checkbox"> Finish the project
-          </label>
-        </a>
-        <a href="#">
-          <span class="material-symbols-outlined">
-            delete
-          </span>
-        </a>
-      </div>
-      <div class="task">
-        <a href="#">
-          <label>
-            <input type="checkbox"> Finish the project
-          </label>
-        </a>
-        <a title="Delete Task" href="#">
-          <span class="material-symbols-outlined">
-            delete
-          </span>
-        </a>
-      </div>
-      <div class="task">
-        <a href="#">
-          <label>
-            <input type="checkbox"> Finish the project
-          </label>
-        </a>
-        <a href="#">
-          <span class="material-symbols-outlined">
-            delete
-          </span>
-        </a>
-      </div>
-      <div class="task">
-        <a href="#">
-          <label>
-            <input type="checkbox"> Finish the project
-          </label>
-        </a>
-        <a href="#">
+        <a href="#" title="Delete Task">
           <span class="material-symbols-outlined">
             delete
           </span>

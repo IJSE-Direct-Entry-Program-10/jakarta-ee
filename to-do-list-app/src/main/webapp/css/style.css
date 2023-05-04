@@ -135,3 +135,8 @@ header h1 span {
     vertical-align: text-top;
     color: dodgerblue;
 }
+
+#hint {
+    text-align: center;
+    color:  #3b3b3b;
+}
