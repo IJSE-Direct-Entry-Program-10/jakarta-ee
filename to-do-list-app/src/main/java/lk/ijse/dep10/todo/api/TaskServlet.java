@@ -53,8 +53,8 @@ public class TaskServlet extends HttpServlet {
             PreparedStatement stm = connection.prepareStatement("DELETE FROM Task WHERE id=?");
             var taskId = Integer.parseInt(req.getPathInfo().substring(1));
             stm.setInt(1, taskId);
-            int affectedRow = stm.executeUpdate();
-            if (affectedRow == 1){
+            int affectedRows = stm.executeUpdate();
+            if (affectedRows == 1){
                 resp.setStatus(HttpServletResponse.SC_NO_CONTENT);
 //                getServletContext().getRequestDispatcher("/index.jsp")
 //                        .forward(req, resp);
@@ -71,7 +71,31 @@ public class TaskServlet extends HttpServlet {
             resp.sendError(HttpServletResponse.SC_BAD_REQUEST, "Invalid URI");
             return;
         }
-        resp.getWriter().println("<h1>Patch Works!</h1>");
+        String status = req.getParameter("status");
+        if (status == null ||
+                status.equalsIgnoreCase("COMPLETED") ||
+                status.equalsIgnoreCase("NOT_COMPLETED")){
+            resp.sendError(HttpServletResponse.SC_BAD_REQUEST, "Invalid Status");
+            return;
+        }
+        BasicDataSource dbcp = (BasicDataSource) getServletContext().getAttribute("dbcp");
+        try (Connection connection = dbcp.getConnection()) {
+            PreparedStatement stm = connection
+                    .prepareStatement("UPDATE Task SET status=? WHERE id=?");
+            var taskId = Integer.parseInt(req.getPathInfo().substring(1));
+            stm.setString(1, req.getParameter("status"));
+            stm.setInt(2, taskId);
+            int affectedRows = stm.executeUpdate();
+            if (affectedRows == 1){
+                resp.setStatus(HttpServletResponse.SC_NO_CONTENT);
+//                getServletContext().getRequestDispatcher("/index.jsp")
+//                        .forward(req, resp);
+            }else {
+                resp.sendError(HttpServletResponse.SC_NOT_FOUND, "Invalid Task ID");
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
     }
 
     @Override
