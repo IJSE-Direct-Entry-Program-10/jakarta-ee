@@ -73,8 +73,8 @@ public class TaskServlet extends HttpServlet {
         }
         String status = req.getParameter("status");
         if (status == null ||
-                status.equalsIgnoreCase("COMPLETED") ||
-                status.equalsIgnoreCase("NOT_COMPLETED")){
+                !(status.equalsIgnoreCase("COMPLETED") ||
+                status.equalsIgnoreCase("NOT_COMPLETED"))){
             resp.sendError(HttpServletResponse.SC_BAD_REQUEST, "Invalid Status");
             return;
         }
