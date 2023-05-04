@@ -11,10 +11,54 @@ h1 {
 }
 
 h2 {
-   font-size: 1.3rem;
+   font-size: 1.5rem;
 }
 
 h1,
 h2 {
     font-weight: bold;
+}
+
+h1 {
+    padding: 10px;
+    text-align: center;
+}
+
+form {
+    padding: 10px 15px;
+    display: flex;
+    gap: 5px;
+}
+
+form > input {
+    flex-grow: 1;
+    padding: 10px;
+    font-family: inherit;
+    font-size: 1rem;
+    border: 1px solid lightgray;
+    border-radius: 5px;
+    outline: none;
+}
+
+form > input:focus,
+form > input:hover {
+    border-color: dodgerblue;
+}
+
+form > button {
+    font-family: inherit;
+    font-size: 1rem;
+    background-color: dodgerblue;
+    color: white;
+    border: 1px solid dodgerblue;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+form > button:hover {
+    background-color: rgba(30, 144, 255, 0.85);
+}
+
+form > button:active {
+    background-color: #0d7eef;
 }
