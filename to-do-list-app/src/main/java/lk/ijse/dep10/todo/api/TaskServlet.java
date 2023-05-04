@@ -19,7 +19,7 @@ public class TaskServlet extends HttpServlet {
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         String description = req.getParameter("description");
         if (description == null || description.isEmpty()){
-            resp.sendError(HttpServletResponse.SC_BAD_REQUEST);
+            resp.sendError(HttpServletResponse.SC_BAD_REQUEST, "Description required");
             return;
         }
 
@@ -30,6 +30,7 @@ public class TaskServlet extends HttpServlet {
             stm.setString(1, description);
             stm.executeUpdate();
 
+            resp.setStatus(HttpServletResponse.SC_CREATED);
             getServletContext().getRequestDispatcher("/index.jsp").forward(req, resp);
         } catch (SQLException e) {
             throw new RuntimeException(e);

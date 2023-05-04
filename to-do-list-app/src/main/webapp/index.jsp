@@ -57,8 +57,8 @@
         task_alt
       </span>
         To-do List App</h1>
-    <form action="#">
-        <input type="text" placeholder="Enter a new task (Eg. Finalize the UI)">
+    <form action="tasks" method="POST" enctype="application/x-www-form-urlencoded">
+        <input name="description" type="text" placeholder="Enter a new task (Eg. Finalize the UI)">
         <button>Add New Task</button>
     </form>
 </header>
