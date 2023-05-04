@@ -11,7 +11,7 @@ h1 {
 }
 
 h2 {
-   font-size: 1.5rem;
+    font-size: 1.5rem;
 }
 
 h1,
@@ -61,4 +61,77 @@ form > button:hover {
 
 form > button:active {
     background-color: #0d7eef;
+}
+
+#tasks,
+#completed-tasks {
+    padding: 10px 15px;
+}
+
+.task {
+    display: flex;
+    padding: 10px 0;
+}
+
+.task a {
+    text-decoration: none;
+    color: #3b3b3b;
+}
+
+.task label {
+    cursor: pointer;
+}
+
+.task:hover label {
+    color: dodgerblue;
+}
+
+.task a:first-child {
+    flex-grow: 1;
+}
+
+.task a:last-child:hover {
+    color: red;
+}
+
+.task.completed label{
+    text-decoration: line-through;
+}
+
+.task.completed:hover label {
+    color: #8a8a8a;
+}
+
+#completed-tasks h2 {
+    text-align: center;
+    padding: 10px;
+}
+
+footer {
+    text-align: center;
+    font-size: 0.8rem;
+    border-top: 1px solid lightgray;
+    padding: 10px;
+}
+
+main {
+    flex-grow: 1;
+}
+
+body {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+}
+
+header {
+    position: sticky;
+    top: 0;
+    background-color: rgba(255, 255, 255, 0.94);
+}
+
+header h1 span {
+    font-size: 40px;
+    vertical-align: text-top;
+    color: dodgerblue;
 }
