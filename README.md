@@ -17,6 +17,7 @@ A collections of projects to explore the world of Jakarta EE
 	- Request Dispatcher vs. Named Dispatcher
 - [Basics of JSP](/basics-of-jsp)
 - [To-do List App](/to-do-list-app)
+- [Servlet Filters](/servlet-filters)
 
 ### License
 Copyright 2023 DEP. All Rights Reserved.
